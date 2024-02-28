@@ -21,7 +21,7 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "bin": {
-    "media-query-solver": "./dist/esm/cli.js"
+    "media-query-solver": "./dist/cjs/cli.js"
   },
   "exports": {
     "import": "./dist/esm/index.js",

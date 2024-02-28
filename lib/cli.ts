@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable unicorn/no-process-exit, no-console */
 import { solveMediaQueryList } from "./solveMediaQueryList.js";
 
