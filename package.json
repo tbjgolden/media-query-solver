@@ -1,16 +1,20 @@
 {
   "name": "media-query-solver",
-  "description": "Useful functions for working with CSS media queries in JS/TS",
+  "description": "Solve and evaluate media queries",
   "version": "0.0.0",
   "license": "MIT",
   "keywords": [
     "media",
     "query",
-    "functions",
-    "tools",
+    "solver",
     "parser",
+    "compile",
+    "tester",
+    "check",
+    "checker",
+    "evaluate",
+    "evaluation",
     "compiler",
-    "token",
     "typescript"
   ],
   "type": "module",
@@ -87,7 +91,7 @@
     ],
     [
       "*.{ts,js,cjs,mjs,json}",
-      "npx prettier --ignore-path .gitignore --write"
+      "npx prettier --write"
     ]
   ],
   "jest": {

@@ -12,3 +12,4 @@ dist
 /coverage
 !.scripts
 tsconfig.tmp.json
+docs
