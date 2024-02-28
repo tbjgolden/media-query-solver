@@ -1,10 +1,10 @@
-# `media-query-fns`
+# `media-query-solver`
 
-![npm](https://img.shields.io/npm/v/media-query-fns)
-![npm type definitions](https://img.shields.io/npm/types/media-query-fns)
-![license](https://img.shields.io/npm/l/media-query-fns)
-![npm downloads](https://img.shields.io/npm/dw/media-query-fns)
-[![install size](https://packagephobia.com/badge?p=media-query-fns)](https://packagephobia.com/result?p=media-query-fns)
+![npm](https://img.shields.io/npm/v/media-query-solver)
+![npm type definitions](https://img.shields.io/npm/types/media-query-solver)
+![license](https://img.shields.io/npm/l/media-query-solver)
+![npm downloads](https://img.shields.io/npm/dw/media-query-solver)
+[![install size](https://packagephobia.com/badge?p=media-query-solver)](https://packagephobia.com/result?p=media-query-solver)
 
 ![](screen.gif)
 
@@ -17,7 +17,7 @@ Cool functions for media queries. [**Spec-compliant**](https://www.w3.org/TR/med
 This package is available from the `npm` registry.
 
 ```sh
-npm install media-query-fns
+npm install media-query-solver
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ npm install media-query-fns
 Supports JavaScript + TypeScript:
 
 ```ts
-import { compileQuery, matches, toEnglishString } from "media-query-fns";
+import { compileQuery, matches, toEnglishString } from "media-query-solver";
 
 // returns data that can be used to interpret the query
 const maxWidthQuery = compileQuery(`(max-width: 1200px)`);
@@ -52,7 +52,7 @@ console.log(toEnglishString(complexQuery));
 // note: (orientation) without "landscape" or "portrait" is always true, so it's removed for brevity
 ```
 
-Can also be imported via `require("media-query-fns")`.
+Can also be imported via `require("media-query-solver")`.
 
 ## Contributing
 

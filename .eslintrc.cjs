@@ -84,7 +84,7 @@ const config = {
     },
     {
       files: ["lib/**/*.ts"],
-      extends: ["plugin:security/recommended"],
+      extends: ["plugin:security/recommended-legacy"],
       overrides: [
         {
           files: ["lib/**/*.test.ts"],

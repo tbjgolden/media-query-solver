@@ -1,4 +1,4 @@
-import { ParserError, QueryNode, isParserError } from "media-query-parser";
+import { ParserError, QueryNode, isParserError, parseMediaQuery } from "media-query-parser";
 import {
   Kleene3,
   SolverConfig,
@@ -10,12 +10,13 @@ import {
 import { solveMediaCondition_ } from "./solveMediaCondition.js";
 
 export const solveMediaQuery = (
-  mediaQuery: QueryNode | ParserError,
+  mediaQuery: string | QueryNode | ParserError,
   configInput?: SolverConfigInput,
-): Kleene3 =>
-  isParserError(mediaQuery)
-    ? "false"
-    : solveMediaQuery_(mediaQuery, createSolverConfig(configInput));
+): Kleene3 => {
+  const mq = typeof mediaQuery === "string" ? parseMediaQuery(mediaQuery) : mediaQuery;
+
+  return isParserError(mq) ? "false" : solveMediaQuery_(mq, createSolverConfig(configInput));
+};
 
 export const solveMediaQuery_ = (mediaQuery: QueryNode, config: SolverConfig): Kleene3 => {
   if (config.isLegacyBrowser === "true" && mediaQuery.prefix === "only") {

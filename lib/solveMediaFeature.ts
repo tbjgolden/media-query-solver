@@ -1,4 +1,4 @@
-import { FeatureNode, ParserError, isParserError } from "media-query-parser";
+import { FeatureNode, ParserError, isParserError, parseMediaFeature } from "media-query-parser";
 import {
   Kleene3,
   SolverConfig,
@@ -17,12 +17,13 @@ import {
 import { solveMediaCondition_ } from "./solveMediaCondition.js";
 
 export const solveMediaFeature = (
-  condition: FeatureNode | ParserError,
+  feature: string | FeatureNode | ParserError,
   configInput?: SolverConfigInput,
-): Kleene3 =>
-  isParserError(condition)
-    ? "false"
-    : solveMediaFeature_(condition, createSolverConfig(configInput));
+): Kleene3 => {
+  const mf = typeof feature === "string" ? parseMediaFeature(feature) : feature;
+
+  return isParserError(mf) ? "false" : solveMediaFeature_(mf, createSolverConfig(configInput));
+};
 
 export const solveMediaFeature_ = (feature: FeatureNode, config: SolverConfig): Kleene3 => {
   const isMin = feature.feature.startsWith("min-");

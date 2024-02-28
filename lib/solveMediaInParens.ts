@@ -1,4 +1,4 @@
-import { InParensNode, ParserError, isParserError } from "media-query-parser";
+import { InParensNode, ParserError, isParserError, parseMediaCondition } from "media-query-parser";
 import {
   Kleene3,
   SolverConfig,
@@ -9,12 +9,19 @@ import { solveMediaCondition_ } from "./solveMediaCondition.js";
 import { solveMediaFeature_ } from "./solveMediaFeature.js";
 
 export const solveMediaInParens = (
-  inParens: InParensNode | ParserError,
+  inParens: string | InParensNode | ParserError,
   configInput?: SolverConfigInput,
-): Kleene3 =>
-  isParserError(inParens)
-    ? "false"
-    : solveMediaInParens_(inParens, createSolverConfig(configInput));
+): Kleene3 => {
+  let ip;
+  if (typeof inParens === "string") {
+    const mc = parseMediaCondition("(" + inParens + ")");
+    ip = isParserError(mc) ? mc : mc.nodes[0];
+  } else {
+    ip = inParens;
+  }
+
+  return isParserError(ip) ? "false" : solveMediaInParens_(ip, createSolverConfig(configInput));
+};
 
 export const solveMediaInParens_ = (inParens: InParensNode, config: SolverConfig): Kleene3 => {
   if (inParens.node._t === "condition") {

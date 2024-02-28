@@ -4,6 +4,7 @@ import {
   ParserError,
   QueryListNode,
   isParserError,
+  parseMediaQueryList,
 } from "media-query-parser";
 import { solveMediaQuery_ } from "./solveMediaQuery.js";
 
@@ -177,12 +178,14 @@ export const createSolverConfig = (
 };
 
 export const solveMediaQueryList = (
-  mediaQueryList: QueryListNode | ParserError,
+  mediaQueryList: string | QueryListNode | ParserError,
   configInput?: SolverConfigInput,
-): Kleene3 =>
-  isParserError(mediaQueryList)
-    ? "false"
-    : solveMediaQueryList_(mediaQueryList, createSolverConfig(configInput));
+): Kleene3 => {
+  const mql =
+    typeof mediaQueryList === "string" ? parseMediaQueryList(mediaQueryList) : mediaQueryList;
+
+  return isParserError(mql) ? "false" : solveMediaQueryList_(mql, createSolverConfig(configInput));
+};
 
 export const solveMediaQueryList_ = (
   mediaQueryList: QueryListNode,
