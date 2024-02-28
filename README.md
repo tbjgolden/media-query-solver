@@ -10,10 +10,6 @@ Solve media queries (and detect useless ones!)
 
 > Try with `npx`:
 >
-> ```sh
-> npx media-query-solver 'not all, ((width > 100px) or (monochrome))'
-> ```
->
 > ![cli output](cli-output.png)
 
 ## Install
@@ -38,12 +34,15 @@ solveMediaQueryList(`all`);
 solveMediaQueryList(`(width > 100px)`);
 // => "unknown"
 solveMediaQueryList(`(width > 100px)`, {
-  solveUnknownFeature: () => "true",
+  // this function can be modified to provide custom functionality
+  solveUnknownFeature: (featureNode) => "true",
 });
 // => "true"
 ```
 
 Can also be imported via `require("media-query-solver")`.
+
+## [Full API Docs](https://tbjgolden.github.io/media-query-solver/)
 
 ## Contributing
 
