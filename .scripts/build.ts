@@ -1,4 +1,4 @@
-import { readFile, writeFile, rm, mkdir, readdir } from "node:fs/promises";
+import { readFile, writeFile, rm, mkdir, readdir, chmod } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { join } from "node:path";
 import { checkDirectory, getPackageJson, readJSON } from "./lib/utils.js";
@@ -37,6 +37,7 @@ await new Promise<void>((resolve, reject) => {
     else resolve();
   });
 });
+await chmod("dist/esm/cli.js", 0o755);
 await rm("tsconfig.esm.json");
 
 // Build CJS
@@ -56,6 +57,7 @@ await new Promise<void>((resolve, reject) => {
   });
 });
 await writeFile("dist/cjs/package.json", `{\n  "type": "commonjs"\n}\n`);
+await chmod("dist/cjs/cli.js", 0o755);
 await rm("tsconfig.cjs.json");
 await writeFile("package.json", origPkgJsonText);
 
