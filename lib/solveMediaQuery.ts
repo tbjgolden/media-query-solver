@@ -11,7 +11,7 @@ import { solveMediaCondition_ } from "./solveMediaCondition.js";
 
 export const solveMediaQuery = (
   mediaQuery: QueryNode | ParserError,
-  configInput?: SolverConfigInput
+  configInput?: SolverConfigInput,
 ): Kleene3 =>
   isParserError(mediaQuery)
     ? "false"
