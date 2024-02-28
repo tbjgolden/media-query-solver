@@ -1,7 +1,7 @@
 {
   "name": "media-query-solver",
   "description": "Useful functions for working with CSS media queries in JS/TS",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "license": "MIT",
   "keywords": [
     "media",
