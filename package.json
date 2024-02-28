@@ -1,7 +1,7 @@
 {
   "name": "media-query-solver",
   "description": "Solve and evaluate media queries",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "keywords": [
     "media",
