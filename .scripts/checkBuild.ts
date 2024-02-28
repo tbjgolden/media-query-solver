@@ -1,3 +1,4 @@
+import { FeatureNode } from "media-query-parser";
 import { getPackageJson, checkDirectory, isFile } from "./lib/utils.js";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
@@ -34,8 +35,17 @@ const packageJson = await getPackageJson();
     process.exit(1);
   }
   const { solveMediaQueryList } = await import(process.cwd() + "/" + entrypoint);
-  const result = JSON.stringify(solveMediaQueryList("(monochrome)"));
-  const expected = JSON.stringify("unknown");
+  const result = JSON.stringify(
+    solveMediaQueryList("not all, ((width > 100px) or (monochrome))", {
+      solveUnknownFeature: (featureNode: FeatureNode) => {
+        if (featureNode.context === "boolean" && featureNode.feature === "monochrome") {
+          return "true";
+        }
+        return "unknown";
+      },
+    }),
+  );
+  const expected = JSON.stringify("true");
   if (result !== expected) {
     console.log("expected:");
     console.log(expected);
@@ -81,6 +91,28 @@ const packageJson = await getPackageJson();
     console.log(expected);
     console.log("actual:");
     console.log(result);
+    process.exit(1);
+  }
+}
+
+{
+  console.log("validating cli...");
+  const entrypoint = packageJson.bin?.["media-query-solver"];
+  if (entrypoint) {
+    const { execSync } = require("child_process");
+    const result = execSync(
+      `NO_COLOR=1 node ${entrypoint} 'not all, ((width > 100px) or (monochrome))'`,
+    ).toString();
+    const expected = `solving this media query:\n\n@media not all, ((width > 100px) or (monochrome)) { /* ... */ }\n\n=> unknown\n\nsome (but not all browsers) will match this media query\n`;
+    if (result !== expected) {
+      console.log("expected:");
+      console.log(expected);
+      console.log("actual:");
+      console.log(result);
+      process.exit(1);
+    }
+  } else {
+    console.log("package.json must have a bin field");
     process.exit(1);
   }
 }

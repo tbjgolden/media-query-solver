@@ -16,6 +16,9 @@
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
+  "bin": {
+    "media-query-solver": "./dist/cjs/cli.js"
+  },
   "exports": {
     "import": "./dist/esm/index.js",
     "require": "./dist/cjs/index.js"
@@ -36,10 +39,11 @@
     "node": ">=16.0.0 || ^14.13.1"
   },
   "scripts": {
-    "build": "xnr ./.scripts/build.ts",
+    "build": "xnr ./.scripts/build.ts && npm run build-docs",
     "check-build": "xnr ./.scripts/checkBuild.ts",
     "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' npx jest",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "build-docs": "npx typedoc --out docs lib/index.ts"
   },
   "peerDependencies": {
     "media-query-parser": "^3.0.2"

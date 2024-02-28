@@ -6,11 +6,15 @@
 ![npm downloads](https://img.shields.io/npm/dw/media-query-solver)
 [![install size](https://packagephobia.com/badge?p=media-query-solver)](https://packagephobia.com/result?p=media-query-solver)
 
-![](screen.gif)
+Solve media queries (and detect useless ones!)
 
-Cool functions for media queries. [**Spec-compliant**](https://www.w3.org/TR/mediaqueries-5).
-
----
+> Try with `npx`:
+>
+> ```sh
+> npx media-query-solver 'not all, ((width > 100px) or (monochrome))'
+> ```
+>
+> ![cli output](cli-output.png)
 
 ## Install
 
@@ -25,31 +29,18 @@ npm install media-query-solver
 Supports JavaScript + TypeScript:
 
 ```ts
-import { compileQuery, matches, toEnglishString } from "media-query-solver";
+import { solveMediaQueryList } from "media-query-solver";
 
-// returns data that can be used to interpret the query
-const maxWidthQuery = compileQuery(`(max-width: 1200px)`);
-// (throws if invalid query syntax)
-
-const testEnv = (widthPx = 1280, heightPx = 800) => ({
-  widthPx,
-  heightPx,
-  deviceWidthPx: widthPx,
-  deviceHeightPx: heightPx,
-  dppx: 2,
+solveMediaQueryList(`not all`);
+// => "false"
+solveMediaQueryList(`all`);
+// => "true"
+solveMediaQueryList(`(width > 100px)`);
+// => "unknown"
+solveMediaQueryList(`(width > 100px)`, {
+  solveUnknownFeature: () => "true",
 });
-console.log(matches(maxWidthQuery, testEnv(1280))); // false
-console.log(matches(maxWidthQuery, testEnv(1000))); // true
-
-const complexQuery = compileQuery(`screen and (monochrome) and (orientation)`);
-console.log(matches(complexQuery, testEnv()));
-// true
-
-console.log(toEnglishString(maxWidthQuery));
-// 'if width ≤ 1200px'
-console.log(toEnglishString(complexQuery));
-// 'if (is screen AND monochrome)'
-// note: (orientation) without "landscape" or "portrait" is always true, so it's removed for brevity
+// => "true"
 ```
 
 Can also be imported via `require("media-query-solver")`.
